@@ -9,6 +9,7 @@ import org.jivesoftware.smack.roster.Roster
 import org.jivesoftware.smack.tcp.XMPPTCPConnection
 import org.jxmpp.jid.impl.JidCreate
 
+/** This is the command that does all of the work. */
 class AlertCommand extends ConfiguredCommand[AlertConfiguration]("alert", "Send Message to User") {
   override def run(bootstrap: Bootstrap[AlertConfiguration], namespace: Namespace, cfg: AlertConfiguration): Unit = {
     new Java7SmackInitializer().initialize()
@@ -17,15 +18,15 @@ class AlertCommand extends ConfiguredCommand[AlertConfiguration]("alert", "Send 
     conn.connect()
     conn.login(cfg.talk.user, cfg.talk.password)
 
-    val recvJid = JidCreate.bareFrom(cfg.user)
+    val receiver = JidCreate.bareFrom(cfg.user)
 
     val roster = Roster.getInstanceFor(conn)
-    if (roster.getEntry(recvJid) == null) {
-      roster.createEntry(recvJid, cfg.user, Array())
+    if (roster.getEntry(receiver) == null) {
+      roster.createEntry(receiver, cfg.user, Array())
     }
 
     val chatman = ChatManager.getInstanceFor(conn)
-    val chat = chatman.createChat(recvJid)
+    val chat = chatman.createChat(receiver)
 
     chat.sendMessage(cfg.msg)
 

@@ -8,10 +8,12 @@ import io.dropwizard.setup.{Bootstrap, Environment}
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration
 import org.jxmpp.jid.impl.JidCreate
 
+/** Used to validate any hostname that we might chat on. */
 object NoopHostnameVerifier extends HostnameVerifier {
   override def verify(s: String, sslSession: SSLSession): Boolean = true
 }
 
+/** The model to identify the sender to chat from. */
 class TalkConfiguration {
   @JsonProperty
   var host: String = ""
@@ -38,6 +40,7 @@ class TalkConfiguration {
   }
 }
 
+/** The configuration for the command. Talk is the sender, user and msg are usually passed as jvm args via -Ddw.user */
 class AlertConfiguration extends Configuration {
   @JsonProperty
   var talk = new TalkConfiguration
@@ -49,6 +52,7 @@ class AlertConfiguration extends Configuration {
   var msg = ""
 }
 
+/** The main Application to run. */
 object AlertApplication extends ScalaApplication[AlertConfiguration] {
   override def initialize(bootstrap: Bootstrap[AlertConfiguration]): Unit = {
     bootstrap.addCommand(new AlertCommand)
