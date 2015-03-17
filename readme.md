@@ -7,7 +7,7 @@ Usage:
 java -jar xmpp-alert.jar alert npc-cred.yml -Ddw.user=alertedUser -Ddw.msg="Hello There"
 ```
 
-Where npc-cred.yml:
+Sample Config (`npc-cred.yml`):
 ```yml
 talk:
   host: talk.google.com
@@ -20,4 +20,4 @@ user: person-to-notify@gmail.com
 msg: Hello Person.
 ```
 
-Note the -Ddw.user and -Ddw.msg flags overwrite what exists in the config file.
+Note the `-Ddw.user` and `-Ddw.msg` flags overwrite what exists in the config file.
